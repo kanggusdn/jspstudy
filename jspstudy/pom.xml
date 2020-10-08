@@ -11,7 +11,12 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
+<<<<<<< HEAD
           <release>14</release>
+=======
+          <source>1.8</source>
+          <target>1.8</target>
+>>>>>>> branch 'master' of https://github.com/kanggusdn/jspstudy.git
         </configuration>
       </plugin>
       <plugin>
