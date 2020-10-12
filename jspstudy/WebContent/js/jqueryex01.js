@@ -8,7 +8,7 @@
 //	});
 //});
 
-$(function(){
+$(function(){ 
 	var heightArray = new Array();
 	$("nav ul ul").css({display:"none"});
 	$("nav > ul > li").each(function(){heightArray.push($(this).find("ul").height());});

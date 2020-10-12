@@ -1,7 +1,7 @@
 $(function(){
 	$("html, body").on("DOMMouseScroll", function(e){
 		console.log("e.originalEvent.detail : " + e.originalEvent.detail);
-	});
+	}); 
 	$("html, body").on("mousewheel", function(e){
 		console.log("e.originalEvent.wheelDelta : " + e.originalEvent.wheelDelta);
 	});

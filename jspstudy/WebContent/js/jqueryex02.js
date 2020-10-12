@@ -2,7 +2,7 @@ $(function(){
 	var isOnMenu = true;
 	$(".menuBtn").click(function(){
 		if(isOnMenu == false) {
-			isOnMenu = true;
+			isOnMenu = true; 
 			$(this).find("span").stop(false, true);
 			$(this).find("span").removeClass("menuBtnOn");
 			$("nav").removeClass("navOn");
