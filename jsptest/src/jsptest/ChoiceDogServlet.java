@@ -9,29 +9,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/choice_dog")
+public class ChoiceDogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("get");
 		doProc(request, response);
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("post");
 		doProc(request, response);
 	}
 	
 	protected void doProc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");	//post에서 한글 처리
-		response.setContentType("text/html;charset=utf-8");	//get에서 한글 처리
-		String id = request.getParameter("id");
-		String pw = request.getParameter("passwd");
-		String hv = request.getParameter("hiddenValue");
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		out.println("<p>아이디 = " + id + "</p>");
-		out.println("<p>비밀번호 = " + pw + "</p>");
-		out.println(hv);
+		String[] dog = request.getParameterValues("dog");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("</head>");
+		out.println("<body bgcolor='black'>");
+		out.println("<table align='center' bgcolor='yellow'>");
+		out.println("<tr>");
+		for(int i=0; i<dog.length; i++) {
+			out.println("<td>");
+			out.println("<img src='"+ dog[i]+"'/>");
+			out.println("</td>");
+		}
+		out.println("</tr>");
+		out.println("</table>");
+		out.println("</body>");
+		out.println("</html>");
 	}
 }
