@@ -23,7 +23,7 @@ public class GetNameServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doProc(request, response);
-	}
+	} 
 
 	protected void doProc(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

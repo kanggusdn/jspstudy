@@ -6,7 +6,7 @@
 <meta charset="UTF-8" />
 <title>Insert title here</title>
 </head>
-<body>
+<body> 
 	<form action="sessionlogin" method="post">
 		아이디 : <input type="text" name="id" /> 비밀번호 : <input type="password"
 			name="passwd" /><br> <input type="submit" value="로그인" />
