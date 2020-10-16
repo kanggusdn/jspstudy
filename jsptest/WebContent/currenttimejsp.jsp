@@ -8,7 +8,7 @@
 	int s = c.get(Calendar.SECOND);
 	//자바 주석
 	/*자바 주석*/
-%>
+%> 
 <%-- JSP 주석 --%>
 <!DOCTYPE html>
 <!--  html 주석 -->
