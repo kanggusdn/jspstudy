@@ -1,5 +1,5 @@
 $(function() {
-	var images = [
+	var images = [ 
 		"images/picture1.jpg",
 		"images/picture2.jpg",
 		"images/picture3.jpg",
