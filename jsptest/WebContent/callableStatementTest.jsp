@@ -14,7 +14,7 @@
 		cs.setString(1, "aaa");
 		cs.registerOutParameter(2, java.sql.Types.INTEGER);
 		cs.execute();
-		out.println(cs.getInt(2));
+		out.println(cs.getInt(2)); 
 	} catch(Exception e) {
 		out.println("<h3>레코드 등록에 실패하였습니다.</h3>");
 		e.printStackTrace();

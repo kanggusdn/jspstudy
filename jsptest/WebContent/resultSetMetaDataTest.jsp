@@ -17,7 +17,7 @@
 		
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
-		rsmd = rs.getMetaData();
+		rsmd = rs.getMetaData(); 
 		
 		out.println("칼럼 수 : " + rsmd.getColumnCount() + "<br>");
 		for(int i = 1; i <= rsmd.getColumnCount(); i++) {
