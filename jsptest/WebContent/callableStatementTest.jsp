@@ -4,7 +4,7 @@
 <%@ page import="javax.sql.*"%>
 <%@ page import="javax.naming.*"%>
 <%
-	Connection conn = null;
+	Connection conn = null; 
 	CallableStatement cs = null;
 	try{
 		Context init = new InitialContext();

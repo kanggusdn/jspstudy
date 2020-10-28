@@ -5,7 +5,7 @@
 <%@ page import="javax.naming.*"%>
 <%
 	Connection conn = null; 
-	PreparedStatement pstmt = null;
+	PreparedStatement pstmt = null; 
 	ResultSet rs = null;
 	String sql = "INSERT INTO employee (id, name) VALUES (4, 'ddd')";
 	String sql2 = "SELECT * FROM employee where name = 'bbb'";
