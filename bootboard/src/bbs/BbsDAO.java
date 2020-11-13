@@ -14,6 +14,8 @@ public class BbsDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
+	private int widthBlock = 5;
+	private int pageRows = 10;
 
 	public BbsDAO() {
 		try {
@@ -87,11 +89,11 @@ public class BbsDAO {
 	}
 	
 	public Vector<Bbs> getList(int pageNumber) {
-		String sql = "SELECT * FROM bbs WHERE bbsId <= ? AND bbsAvailable = 1 ORDER BY bbsId DESC LIMIT 10";
+		String sql = "SELECT * FROM bbs WHERE bbsId <= ? AND bbsAvailable = 1 ORDER BY bbsId DESC LIMIT " + getPageRows();
 		Vector<Bbs> list = new Vector<Bbs>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, getNext() - (pageNumber-1) * 10);
+			pstmt.setInt(1, getNext() - (pageNumber-1) * getPageRows());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Bbs bbs = new Bbs();
@@ -104,36 +106,21 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 		return list;
-	}
-	
-	public int bbsCnt() {
-		String sql ="SELECT COUNT(*) FROM bbs WHERE bbsId < ? AND bbsAvailable = 1";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, getNext());
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
+	}	
 	
 	public boolean nextPage(int pageNumber) {
-		String sql ="SELECT * FROM bbs WHERE bbsId <= ? AND bbsAvailable = 1";
+		String sql ="SELECT * FROM bbs WHERE bbsId < ? AND bbsAvailable = 1";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, getNext() - (pageNumber -2) * 10);
+			pstmt.setInt(1, getNext() - (pageNumber -1) * getPageRows());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				return true;
+				return false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 	
 	public Bbs getBbs(int bbsId) {
@@ -182,5 +169,51 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public int getWidthBlock() {
+		return widthBlock;
+	}
+	
+	public int getPageRows() {
+		return pageRows;
+	}
+	
+	public int getViewList() {
+		String sql = "SELECT COUNT(*) FROM bbs WHERE bbsAvailable=1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	public int totalBlock() {
+		if (getViewList() % (widthBlock * pageRows) > 0) {
+			return getViewList() / (widthBlock * pageRows) + 1;
+		}
+		return getViewList() / (widthBlock * pageRows);
+	}
+	
+	public int currentBlock(int pageNumber) {
+		if (pageNumber % widthBlock > 0) {
+			return pageNumber / widthBlock + 1;
+		}
+		return pageNumber / widthBlock;
+	}
+	
+	public int totalPage() {
+		if (getViewList() % pageRows > 0) {
+			return getViewList() / pageRows + 1;
+		}
+		
+		return getViewList() / pageRows;
 	}
 }
