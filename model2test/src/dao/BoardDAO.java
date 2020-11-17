@@ -54,7 +54,7 @@ public class BoardDAO {
 	public ArrayList<BoardBean> selectArticleList(int page, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String board_list_sql = "select * from board order by board_re_ref desc, board_re_seq asc limit ?, 10";
+		String board_list_sql = "select * from board order by board_re_ref desc, board_re_seq asc limit ?, ?";
 		ArrayList<BoardBean> articleList = new ArrayList<BoardBean>();
 		BoardBean board = null;
 		int startRow = (page - 1) * 10;
@@ -62,6 +62,7 @@ public class BoardDAO {
 		try {
 			pstmt = conn.prepareStatement(board_list_sql);
 			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, limit);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
