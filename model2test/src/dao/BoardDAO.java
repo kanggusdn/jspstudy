@@ -96,6 +96,7 @@ public class BoardDAO {
 		
 		try {
 			pstmt = conn.prepareStatement("select * from board where board_num = ?");
+			pstmt.setInt(1, board_num);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -159,5 +160,23 @@ public class BoardDAO {
 		}
 		
 		return insertCount;
+	}
+
+	public int updateReadCount(int board_num) {
+		PreparedStatement pstmt = null;
+		int updateCount = 0;
+		String sql = "update board set board_readcount = " + "board_readcount +1 where board_num = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			updateCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("setReadCountUpdate 에러: " + e);
+		} finally {
+			if(pstmt != null) close(pstmt);
+		}
+		
+		return updateCount;
 	}
 }
