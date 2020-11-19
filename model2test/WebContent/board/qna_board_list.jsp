@@ -122,7 +122,7 @@ table {
 		<%
 			} else {
 		%>
-		<a href="boradList.do?page=<%=a%>">[<%=a%>]
+		<a href="boardList.do?page=<%=a%>">[<%=a%>]
 		</a>&nbsp;
 		<%
 			}
