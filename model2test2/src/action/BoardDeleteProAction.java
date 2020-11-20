@@ -25,7 +25,6 @@ public class BoardDeleteProAction implements Action {
 			out.println("<alert('삭제할 권한이 없습니다.')");
 			out.println("<history.back();");
 			out.println("</script>");
-			out.close();
 		} else {
 			boolean isDeleteSuccess = boardDeleteProService.removeArticle(board_num);
 
@@ -36,7 +35,6 @@ public class BoardDeleteProAction implements Action {
 				out.println("<alert('삭제 실패')");
 				out.println("<history.back();");
 				out.println("</script>");
-				out.close();
 			} else {
 				forward = new ActionForward();
 				forward.setRedirect(true);
