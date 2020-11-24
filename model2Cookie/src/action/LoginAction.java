@@ -11,11 +11,10 @@ import vo.ActionForward;
 import vo.Member;
 
 
-public class loginAction implements Action{
+public class LoginAction implements Action{
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
 		ActionForward forward = null;
 		String id = request.getParameter("id");
 		String passwd = request.getParameter("passwd");

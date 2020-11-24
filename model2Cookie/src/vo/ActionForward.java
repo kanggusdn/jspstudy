@@ -1,4 +1,4 @@
-package action;
+package vo;
 
 public class ActionForward {
 	private String path;

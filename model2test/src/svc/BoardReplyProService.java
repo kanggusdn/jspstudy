@@ -1,29 +1,30 @@
 package svc;
 
 import static db.JdbcUtil.*;
-
 import java.sql.Connection;
 
 import dao.BoardDAO;
 import vo.BoardBean;
 
 public class BoardReplyProService {
-	public boolean replyArticle(BoardBean article) throws Exception {
+
+	public boolean replyArticle(BoardBean article) {
 		boolean isReplySuccess = false;
 		int insertCount = 0;
-		Connection con = getConnection();
+		Connection conn = getConnection();
 		BoardDAO boardDAO = BoardDAO.getInstance();
-		boardDAO.setConnection(con);
+		boardDAO.setConnection(conn);
 		insertCount = boardDAO.insertReplyArticle(article);
-
-		if (insertCount > 0) {
-			commit(con);
+		
+		if(insertCount > 0) {
+			commit(conn);
 			isReplySuccess = true;
 		} else {
-			rollback(con);
+			rollback(conn);
 		}
-
-		close(con);
+		if(conn != null) close(conn);
+		
 		return isReplySuccess;
 	}
+
 }

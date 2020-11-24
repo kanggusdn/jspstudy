@@ -1,30 +1,35 @@
 package svc;
 
+import static db.JdbcUtil.*;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import static db.JdbcUtil.*;
 import dao.BoardDAO;
 import vo.BoardBean;
 
 public class BoardListService {
-	public int getListCount() throws Exception {
+
+	public int getListCount() {
 		int listCount = 0;
-		Connection con = getConnection();
+		Connection conn = getConnection();
 		BoardDAO boardDAO = BoardDAO.getInstance();
-		boardDAO.setConnection(con);
+		boardDAO.setConnection(conn);
 		listCount = boardDAO.selectListCount();
-		close(con);
+		if(conn!=null) close(conn);
+
 		return listCount;
 	}
 
-	public ArrayList<BoardBean> getArticleList(int page, int limit) throws Exception {
+	public ArrayList<BoardBean> getArticleList(int page, int limit) {
 		ArrayList<BoardBean> articleList = null;
-		Connection con = getConnection();
+		Connection conn = getConnection();
 		BoardDAO boardDAO = BoardDAO.getInstance();
-		boardDAO.setConnection(con);
+		boardDAO.setConnection(conn);
 		articleList = boardDAO.selectArticleList(page, limit);
-		close(con);
+		if(conn!=null) close(conn);
+		
 		return articleList;
 	}
+	
 }

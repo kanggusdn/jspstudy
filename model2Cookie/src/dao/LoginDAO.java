@@ -29,7 +29,6 @@ public class LoginDAO {
 	}
 
 	public Member selectLoginMember(String id, String passwd) {
-
 		Member loginMember = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -49,7 +48,6 @@ public class LoginDAO {
 				loginMember.setNation(rs.getString("nation"));
 				loginMember.setPasswd(rs.getString("passwd"));
 			}
-			commit(con);
 		} catch (Exception e) {
 			rollback(con);
 			e.printStackTrace();
@@ -62,30 +60,5 @@ public class LoginDAO {
 			}
 		}
 		return loginMember;
-	}
-
-	public int insertMember(Member member) {
-		PreparedStatement pstmt = null;
-		int joinMember = 0;
-		try {
-			String sql = "insert into users values (?,?,?,?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, member.getId());
-			pstmt.setString(2, member.getPasswd());
-			pstmt.setString(3, member.getAddr());
-			pstmt.setInt(4, member.getAge());
-			pstmt.setString(5, member.getEmail());
-			pstmt.setString(6, member.getGender());
-			pstmt.setString(7, member.getName());
-			pstmt.setString(8, member.getNation());
-			joinMember = pstmt.executeUpdate();
-			commit(con);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)
-				close(pstmt);
-		}
-		return joinMember;
 	}
 }

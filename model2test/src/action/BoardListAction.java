@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import svc.BoardListService;
 import vo.ActionForward;
 import vo.BoardBean;
@@ -16,20 +17,19 @@ public class BoardListAction implements Action {
 		ArrayList<BoardBean> articleList = new ArrayList<BoardBean>();
 		int page = 1;
 		int limit = 10;
-
-		if (request.getParameter("page") != null) {
+		
+		if(request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-
+		
 		BoardListService boardListService = new BoardListService();
 		int listCount = boardListService.getListCount();
 		articleList = boardListService.getArticleList(page, limit);
-		int maxPage = (int) ((double) listCount / limit + 0.95);
-		int startPage = (((int) ((double) page / 10 + 0.9)) - 1) * 10 + 1;
+		int maxPage = (int) ((double)listCount/limit + 0.95);
+		int startPage = (((int)((double)page / 10 + 0.9)) -1) * 10 + 1;
 		int endPage = startPage + 10 - 1;
-
-		if (endPage > maxPage)
-			endPage = maxPage;
+		
+		if(endPage > maxPage) endPage = maxPage;
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setEndPage(endPage);
 		pageInfo.setListCount(listCount);
@@ -40,6 +40,8 @@ public class BoardListAction implements Action {
 		request.setAttribute("articleList", articleList);
 		ActionForward forward = new ActionForward();
 		forward.setPath("/board/qna_board_list.jsp");
+
 		return forward;
 	}
+
 }

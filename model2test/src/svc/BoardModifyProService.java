@@ -1,37 +1,40 @@
 package svc;
 
-import java.sql.Connection;
 import static db.JdbcUtil.*;
+import java.sql.Connection;
+
 import dao.BoardDAO;
 import vo.BoardBean;
 
 public class BoardModifyProService {
-	public boolean isArticleWriter(int board_num, String pass) throws Exception {
+
+	public boolean isArticleWriter(int board_num, String pass) {
 		boolean isArticleWriter = false;
-		Connection con = getConnection();
+		Connection conn = getConnection();
 		BoardDAO boardDAO = BoardDAO.getInstance();
-		boardDAO.setConnection(con);
+		boardDAO.setConnection(conn);
 		isArticleWriter = boardDAO.isArticleBoardWriter(board_num, pass);
-		close(con);
+		close(conn);
+		
 		return isArticleWriter;
 	}
 
-	public boolean modifyArticle(BoardBean article) throws Exception {
+	public boolean modifyArticle(BoardBean article) {
 		boolean isModifySuccess = false;
-		Connection con = getConnection();
+		Connection conn = getConnection();
 		BoardDAO boardDAO = BoardDAO.getInstance();
-		boardDAO.setConnection(con);
+		boardDAO.setConnection(conn);
 		int updateCount = boardDAO.updateArticle(article);
 		
 		if(updateCount > 0) {
-			commit(con);
+			commit(conn);
 			isModifySuccess = true;
+		} else {
+			rollback(conn);
 		}
-		else {
-			rollback(con);
-		}
+		close(conn);
 		
-		close(con);
 		return isModifySuccess;
 	}
+
 }

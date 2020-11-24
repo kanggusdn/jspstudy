@@ -18,8 +18,9 @@ public class BoardReplyFormAction implements Action {
 		BoardBean article = boardDetailService.getArticle(board_num);
 		request.setAttribute("article", article);
 		request.setAttribute("page", nowPage);
-		forward.setPath("/board/qna_board_reply.jsp");
-
+		forward.setPath("board/qna_board_reply.jsp");
+		
 		return forward;
 	}
+
 }
