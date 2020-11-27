@@ -23,4 +23,5 @@ public class DogViewAction implements Action {
 		
 		return forward;
 	}
+
 }

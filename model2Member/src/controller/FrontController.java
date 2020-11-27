@@ -10,16 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
-import action.DogCartAddAction;
-import action.DogCartListAction;
-import action.DogCartQtyDownAction;
-import action.DogCartQtyUpAction;
-import action.DogCartRemoveAction;
-import action.DogCartSearchAction;
-import action.DogListAction;
-import action.DogRegistAction;
-import action.DogRegistFormAction;
-import action.DogViewAction;
+import action.MemberJoinAction;
+import action.MemberJoinProAction;
+import action.MemberListAction;
+import action.MemberLoginAction;
+import action.MemberLoginProAction;
 import vo.ActionForward;
 
 @WebServlet("*.do")
@@ -42,71 +37,36 @@ public class FrontController extends HttpServlet {
 		ActionForward forward = null;
 		Action action = null;
 		
-		if(command.equals("/dogList.do")) {
-			action = new DogListAction();
+		if(command.equals("/memberLogin.do")) {
+			action = new MemberLoginAction();
 			try {
 			forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/dogRegistForm.do")) {
-			action = new DogRegistFormAction();
+		} else if(command.equals("/memberJoin.do")) {
+			action = new MemberJoinAction();
 			try {
 			forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/dogRegist.do")) {
-			action = new DogRegistAction();
+		} else if(command.equals("/memberLoginPro.do")) {
+			action = new MemberLoginProAction();
 			try {
 			forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/dogView.do")) {
-			action = new DogViewAction();
+		} else if(command.equals("/memberJoinPro.do")) {
+			action = new MemberJoinProAction();
 			try {
 			forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/dogCartAdd.do")) {
-			action = new DogCartAddAction();
-			try {
-			forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(command.equals("/dogCartList.do")) {
-			action = new DogCartListAction();
-			try {
-			forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(command.equals("/dogCartSearch.do")) {
-			action = new DogCartSearchAction();
-			try {
-			forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(command.equals("/dogCartRemove.do")) {
-			action = new DogCartRemoveAction();
-			try {
-			forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(command.equals("/dogCartQtyUp.do")) {
-			action = new DogCartQtyUpAction();
-			try {
-			forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if(command.equals("/dogCartQtyDown.do")) {
-			action = new DogCartQtyDownAction();
+		} else if(command.equals("/memberList.do")) {
+			action = new MemberListAction();
 			try {
 			forward = action.execute(request, response);
 			} catch (Exception e) {

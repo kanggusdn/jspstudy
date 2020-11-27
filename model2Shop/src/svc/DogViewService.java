@@ -1,6 +1,9 @@
 package svc;
 
-import static db.JdbcUtil.*;
+import static db.JdbcUtil.close;
+import static db.JdbcUtil.commit;
+import static db.JdbcUtil.getConnection;
+import static db.JdbcUtil.rollback;
 
 import java.sql.Connection;
 
@@ -10,19 +13,21 @@ import vo.Dog;
 public class DogViewService {
 
 	public Dog getDogView(int id) {
-		Connection con = getConnection();
 		DogDAO dogDAO = DogDAO.getInstance();
-		dogDAO.setConnection(con);
-		int updateCount = dogDAO.upadateReadCount(id);
+		Connection conn = getConnection();
+		dogDAO.setConnection(conn);
+		int updateCount = dogDAO.updateReadCount(id);
 
 		if (updateCount > 0) {
-			commit(con);
+			commit(conn);
 		} else {
-			rollback(con);
+			rollback(conn);
 		}
-
 		Dog dog = dogDAO.selectDog(id);
-		close(con);
+
+		close(conn);
+
 		return dog;
 	}
+
 }

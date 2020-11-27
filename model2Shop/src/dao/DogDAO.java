@@ -13,16 +13,15 @@ import vo.Dog;
 public class DogDAO {
 	Connection conn;
 	private static DogDAO boardDAO;
-
+	
 	private DogDAO() {
 	}
-
+	
 	public static DogDAO getInstance() {
-		if (boardDAO == null)
-			boardDAO = new DogDAO();
+		if(boardDAO == null) boardDAO = new DogDAO();
 		return boardDAO;
 	}
-
+	
 	public void setConnection(Connection conn) {
 		this.conn = conn;
 	}
@@ -31,19 +30,29 @@ public class DogDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Dog> dogList = null;
-
+		
 		try {
 			pstmt = conn.prepareStatement("select * from dog");
 			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
+			
+			if(rs.next()) {
 				dogList = new ArrayList<Dog>();
-
+				
 				do {
-					dogList.add(new Dog(rs.getInt("id"), rs.getString("kind"), rs.getInt("price"),
-							rs.getString("image"), rs.getString("country"), rs.getInt("height"), rs.getInt("weight"),
-							rs.getString("content"), rs.getInt("readcount")));
-				} while (rs.next());
+					dogList.add(
+						new Dog(
+							rs.getInt("id"), 
+							rs.getString("kind"), 
+							rs.getInt("price"), 
+							rs.getString("image"), 
+							rs.getString("country"), 
+							rs.getInt("height"), 
+							rs.getInt("weight"), 
+							rs.getString("content"), 
+							rs.getInt("readcount")
+						)
+					);
+				} while(rs.next());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,17 +60,16 @@ public class DogDAO {
 			close(rs);
 			close(pstmt);
 		}
-
+		
 		return dogList;
 	}
 
 	public int insertDog(Dog dog) {
 		PreparedStatement pstmt = null;
 		int insertCount = 0;
-		String sql = "";
-
+		String sql= "insert into dog values(null, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
 		try {
-			sql = "INSERT INTO dog VALUES(null,?,?,?,?,?,?,?,?)"; // sql 구문에서는 null로 표기
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dog.getKind());
 			pstmt.setInt(2, dog.getPrice());
@@ -75,26 +83,27 @@ public class DogDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(pstmt != null) close(pstmt);
 		}
+		
 		return insertCount;
 	}
 
-	public int upadateReadCount(int id) {
+	public int updateReadCount(int id) {
 		PreparedStatement pstmt = null;
 		int updateCount = 0;
-		String sql = "";
-
+		String sql = "update dog set readcount = readcount + 1 where id = ?";
+		
 		try {
-			sql = "UPDATE dog SET readcount = readcount + 1 where id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			updateCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			if(pstmt != null) close(pstmt);
 		}
+		
 		return updateCount;
 	}
 
@@ -102,23 +111,33 @@ public class DogDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Dog dog = null;
-
+		String sql = "select * from dog where id = ?";
+		
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM dog where id=?");
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				dog = new Dog(rs.getInt("id"), rs.getString("kind"), rs.getInt("price"), rs.getString("image"),
-						rs.getString("country"), rs.getInt("height"), rs.getInt("weight"), rs.getString("content"),
-						rs.getInt("readcount"));
+			
+			if(rs.next()) {
+				dog = new Dog(
+					rs.getInt("id"), 
+					rs.getString("kind"), 
+					rs.getInt("price"), 
+					rs.getString("image"), 
+					rs.getString("country"), 
+					rs.getInt("height"), 
+					rs.getInt("weight"), 
+					rs.getString("content"), 
+					rs.getInt("readcount")
+				);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
-			close(rs);
+			if(rs != null) close(rs);
+			if(pstmt != null) close(pstmt);
 		}
+		
 		return dog;
 	}
 

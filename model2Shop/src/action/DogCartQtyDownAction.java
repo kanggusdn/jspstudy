@@ -3,18 +3,16 @@ package action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import svc.DogCardAddService;
+import svc.DogCartQtyDownService;
 import vo.ActionForward;
-import vo.Dog;
 
-public class DogCartAddAction implements Action {
+public class DogCartQtyDownAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		DogCardAddService dogCardAddService = new DogCardAddService();
-		int id = Integer.parseInt(request.getParameter("id"));
-		Dog cartDog = dogCardAddService.getCartDog(id);
-		dogCardAddService.addCart(request, cartDog);
+		String kind = request.getParameter("kind");
+		DogCartQtyDownService dogCartQtyDownService = new DogCartQtyDownService();
+		dogCartQtyDownService.downCartQty(kind, request);
 		ActionForward forward = new ActionForward("dogCartList.do", true);
 		
 		return forward;

@@ -11,20 +11,19 @@ public class DogRegistService {
 
 	public boolean registDog(Dog dog) {
 		DogDAO dogDAO = DogDAO.getInstance();
-		Connection con = getConnection();
-		dogDAO.setConnection(con);
+		Connection conn = getConnection();
+		dogDAO.setConnection(conn);
 		boolean isRegistSuccess = false;
 		int insertCount = dogDAO.insertDog(dog);
-
-		if (insertCount > 0) {
-			commit(con);
+		
+		if(insertCount > 0) {
+			commit(conn);
 			isRegistSuccess = true;
 		} else {
-			rollback(con);
+			rollback(conn);
 		}
+		close(conn);
 
-		close(con);
 		return isRegistSuccess;
 	}
-
 }
