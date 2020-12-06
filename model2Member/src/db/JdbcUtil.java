@@ -14,9 +14,13 @@ public class JdbcUtil {
 		Connection conn = null;
 
 		try {
+			System.out.println("1");
 			Context init = new InitialContext();
-			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/members");
+			System.out.println("2");
+			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/project");
+			System.out.println("3");
 			conn = ds.getConnection();
+			System.out.println("4");
 			conn.setAutoCommit(false);
 		} catch (Exception e) {
 			e.printStackTrace();
